@@ -18,8 +18,11 @@ const useVisualMode = (intial) => {
     const historyArrayLength = history.length;
 
     if (historyArrayLength > 1) {
-      const updatedHistory = history.slice(0, history.length - 1);
-      setHistory(updatedHistory);
+
+      setHistory(prev => {
+        const updatedHistory = prev.slice(0, prev.length - 1);
+        return [...updatedHistory];
+      });
     }
 
   };

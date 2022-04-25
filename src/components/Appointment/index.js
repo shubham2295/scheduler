@@ -6,6 +6,7 @@ import Empty from './Empty';
 import Status from './Status';
 import Confirm from './Confirm';
 import Form from './Form';
+import Error from './Error';
 import useVisualMode from 'hooks/useVisualMode';
 
 const EMPTY = "EMPTY";
@@ -15,10 +16,13 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
 
-  console.log(props);
+  /*  console.log(props); */
+
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -31,19 +35,24 @@ export default function Appointment(props) {
       interviewer
     };
 
-    transition(SAVING);
+    transition(SAVING, true);
 
     props.bookInterview(props.id, { ...interview })
       .then(response => {
         transition(SHOW);
-      });
+      })
+      .catch(error => transition(ERROR_SAVE, true));
   };
 
   const deleteAppointment = (id) => {
-    transition(DELETING);
+    transition(DELETING, true);
     props.cancelInterview(id)
       .then(response => {
         transition(EMPTY);
+      })
+      .catch(error => {
+        console.log("error");
+        transition(ERROR_DELETE, true);
       });
   };
 
@@ -75,6 +84,8 @@ export default function Appointment(props) {
           onEdit={ () => transition(EDIT) }
         />
       ) }
+      { mode === ERROR_DELETE && <Error message="Something went wrong" onClose={ () => back() } /> }
+      { mode === ERROR_SAVE && <Error message="Something went wrong" onClose={ () => back() } /> }
     </article>
   );
 }

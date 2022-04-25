@@ -1,81 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import DayList from "./DayList";
 import "components/Application.scss";
 import Appointment from "./Appointment";
-import axios from 'axios';
+import useApplicationData from "hooks/useApplicationData";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
-
-
 
 export default function Application(props) {
 
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
+
+  console.log(state);
+
   const { day, days } = state;
-  const setDay = day => setState(prev => ({ ...prev, day }));
-
-  useEffect(() => {
-
-    Promise.all([
-      axios.get('http://localhost:8001/api/days'),
-      axios.get('http://localhost:8001/api/appointments'),
-      axios.get('http://localhost:8001/api/interviewers')])
-      .then(([daysResponse, appointmentsResponse, interviewrsResponse]) => {
-        setState(prev => (
-          {
-            ...prev, days: daysResponse.data,
-            appointments: appointmentsResponse.data,
-            interviewers: interviewrsResponse.data
-          })
-        );
-      });
-  }, []);
-
-  const bookInterview = (id, interview) => {
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
-      .then(response => {
-        setState(prev => ({ ...prev, appointments }));
-      });
-
-  };
-
-  const cancelInterview = (id) => {
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
-      .then(response => {
-        setState(prev => ({ ...prev, appointments }));
-      });
-
-
-  };
-
-
-
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const interviewersForTheDay = getInterviewersForDay(state, state.day);
