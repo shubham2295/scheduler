@@ -1,16 +1,63 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import axios from 'axios';
+
+const stateReducer = (state, action) => {
+
+  if (action.type === "SET_DAY") {
+    return { ...state, day: action.day };
+  }
+  if (action.type === "API_DATA") {
+    return {
+      ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers
+    };
+  }
+  if (action.type === "SET_INTERVIEW") {
+    const appointment = {
+      ...state.appointments[action.id],
+      interview: { ...(action.interview) }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [action.id]: appointment
+    };
+
+    const days = state.days.map(day => {
+      if (day.name === state.day) {
+        let spots = day.spots;
+        if (action.interview) {
+          spots--;
+        } else {
+          spots++;
+        }
+
+        return { ...day, spots: spots };
+
+      }
+      return day;
+    });
+
+    return {
+      ...state,
+      appointments,
+      days
+    };
+  }
+  return state;
+
+};
+
 
 const useApplicationData = () => {
 
-  const [state, setState] = useState({
+  const [state, dispatchState] = useReducer(stateReducer, {
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
   });
 
-  const setDay = day => setState(prev => ({ ...prev, day }));
+  const setDay = day => dispatchState({ type: "SET_DAY", day });
 
   useEffect(() => {
 
@@ -19,13 +66,12 @@ const useApplicationData = () => {
       axios.get('http://localhost:8001/api/appointments'),
       axios.get('http://localhost:8001/api/interviewers')])
       .then(([daysResponse, appointmentsResponse, interviewrsResponse]) => {
-        setState(prev => (
-          {
-            ...prev, days: daysResponse.data,
-            appointments: appointmentsResponse.data,
-            interviewers: interviewrsResponse.data
-          })
-        );
+        dispatchState({
+          type: "API_DATA",
+          days: daysResponse.data,
+          appointments: appointmentsResponse.data,
+          interviewers: interviewrsResponse.data
+        });
       });
   }, []);
 
@@ -33,21 +79,9 @@ const useApplicationData = () => {
 
   const bookInterview = (id, interview) => {
 
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    const days = updateDays(state.day, appointments);
-
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(response => {
-        setState(prev => ({ ...prev, appointments, days }));
+        dispatchState({ type: "SET_INTERVIEW", id, interview });
       })
       .catch(error => Promise.reject(error));
 
@@ -55,56 +89,12 @@ const useApplicationData = () => {
 
   const cancelInterview = (id) => {
 
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    const days = updateDays(state.day, appointments);
-
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
       .then(response => {
-        setState(prev => ({ ...prev, appointments, days }));
+        dispatchState({ type: "SET_INTERVIEW", id, interview: null });
       })
       .catch(error => Promise.reject(error));
   };
-
-  const updateSpots = (dayName, appointments) => {
-    let spots = 0;
-    const currentDayObject = (state.days.filter(day => day.name === dayName))[0];
-    if (currentDayObject) {
-      const appointmentsArrayForCurrentDay = currentDayObject.appointments;
-      spots = appointmentsArrayForCurrentDay.reduce((prev, current) => {
-        if (!appointments[current].interview) {
-          return prev + 1;
-        }
-        return prev;
-      }, 0);
-
-    }
-    console.log("Spots", spots);
-    return spots;
-  };
-
-  const updateDays = (dayName, appointments) => {
-
-    const updatedDaysList = state.days.map(day => {
-      if (day.name === dayName) {
-        return { ...day, spots: updateSpots(dayName, appointments) };
-      }
-      return day;
-    });
-
-    return updatedDaysList;
-
-  };
-
-
 
   return {
     state,
