@@ -8,7 +8,10 @@ const stateReducer = (state, action) => {
   }
   if (action.type === "API_DATA") {
     return {
-      ...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers
+      ...state,
+      days: action.days,
+      appointments: action.appointments,
+      interviewers: action.interviewers
     };
   }
   if (action.type === "SET_INTERVIEW") {
@@ -25,14 +28,8 @@ const stateReducer = (state, action) => {
     const days = state.days.map(day => {
       if (day.name === state.day) {
         let spots = day.spots;
-        if (action.interview) {
-          spots--;
-        } else {
-          spots++;
-        }
-
+        (action.interview) ? spots-- : spots++;
         return { ...day, spots: spots };
-
       }
       return day;
     });
@@ -62,9 +59,9 @@ const useApplicationData = () => {
   useEffect(() => {
 
     Promise.all([
-      axios.get('http://localhost:8001/api/days'),
-      axios.get('http://localhost:8001/api/appointments'),
-      axios.get('http://localhost:8001/api/interviewers')])
+      axios.get('/api/days'),
+      axios.get('/api/appointments'),
+      axios.get('/api/interviewers')])
       .then(([daysResponse, appointmentsResponse, interviewrsResponse]) => {
         dispatchState({
           type: "API_DATA",
@@ -76,10 +73,9 @@ const useApplicationData = () => {
   }, []);
 
 
-
   const bookInterview = (id, interview) => {
 
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
+    return axios.put(`/api/appointments/${id}`, { interview })
       .then(response => {
         dispatchState({ type: "SET_INTERVIEW", id, interview });
       })
