@@ -89,7 +89,7 @@ const useApplicationData = () => {
 
   const cancelInterview = (id) => {
 
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    return axios.delete(`/api/appointments/${id}`)
       .then(response => {
         dispatchState({ type: "SET_INTERVIEW", id, interview: null });
       })
