@@ -1,6 +1,10 @@
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 
+if (process.env.REACT_APP_API_BASE_URL) {
+  axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
+}
+
 const stateReducer = (state, action) => {
 
   if (action.type === "SET_DAY") {
