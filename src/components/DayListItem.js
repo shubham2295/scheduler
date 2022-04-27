@@ -21,7 +21,7 @@ export default function DayListItem(props) {
   };
 
   return (
-    <li className={ listItemClass } onClick={ props.onChange } selected={ props.selected }>
+    <li className={ listItemClass } onClick={ props.onChange } selected={ props.selected } data-testid="day">
       <h2 className="text--regular">{ props.value }</h2>
       <h3 className="text--light">{ formatSpots(props.spots) }</h3>
     </li>
