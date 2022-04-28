@@ -4,7 +4,7 @@ An SPA application to create, edit and delete the appointments📅. Created usin
 
 ## Sneakpeek
 
-![scheduler-gif]()
+![scheduler-gif](https://github.com/shubham2295/scheduler/blob/master/assets/scheduler.GIF)
 
 ## Getting Started
 
