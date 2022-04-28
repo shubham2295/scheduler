@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import InterviewerList from 'components/InterviewerList';
 import Button from 'components/Button';
 
-
-export default function Form(props) {
+// a controlled component to store and updated appointement data
+const Form = (props) => {
 
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
+  // resets form inputfields on cancel
   const reset = () => {
     setError("");
     setStudent("");
@@ -17,6 +18,7 @@ export default function Form(props) {
 
   const cancel = () => props.onCancel();
 
+  // validates form input fields on save
   const validate = () => {
 
     if (student === "") {
@@ -66,4 +68,6 @@ export default function Form(props) {
       </section>
     </main>
   );
-}
+};
+
+export default Form;

@@ -1,6 +1,7 @@
 import React from 'react';
 
-export default function Status(props) {
+// displays intermediate status while user trying to perform save or delete actions
+const Status = (props) => {
   return (
     <main className="appointment__card appointment__card--status">
       <img
@@ -11,4 +12,6 @@ export default function Status(props) {
       <h1 className="text--semi-bold">{ props.message }</h1>
     </main>
   );
-}
+};
+
+export default Status;

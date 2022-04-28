@@ -1,5 +1,5 @@
-
 describe("Navigation", () => {
+
   it("should visit root", () => {
     cy.visit("/");
   });
@@ -13,6 +13,5 @@ describe("Navigation", () => {
       .should("have.class", "day-list__item--selected");
 
   });
-
 
 });

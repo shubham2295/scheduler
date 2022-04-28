@@ -1,8 +1,5 @@
-/* eslint-disable func-style */
 
-
-
-export function getAppointmentsForDay(state, day) {
+const getAppointmentsForDay = (state, day) => {
 
   let appointmentIdArray = [];
 
@@ -18,9 +15,9 @@ export function getAppointmentsForDay(state, day) {
 
   return result;
 
-}
+};
 
-export function getInterview(state, interview) {
+const getInterview = (state, interview) => {
 
   if (!interview) {
     return null;
@@ -28,9 +25,9 @@ export function getInterview(state, interview) {
   const interviewerId = interview.interviewer;
   return { ...interview, interviewer: state.interviewers[interviewerId] };
 
-}
+};
 
-export function getInterviewersForDay(state, day) {
+const getInterviewersForDay = (state, day) => {
 
   let interviewersIDArray = [];
 
@@ -46,4 +43,6 @@ export function getInterviewersForDay(state, day) {
 
   return result;
 
-}
+};
+
+export { getInterviewersForDay, getInterview, getAppointmentsForDay };

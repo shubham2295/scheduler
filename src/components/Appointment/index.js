@@ -19,7 +19,8 @@ const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
-export default function Appointment(props) {
+//Displays different modes of appointment slots based on user interactions
+const Appointment = (props) => {
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -88,4 +89,6 @@ export default function Appointment(props) {
       { mode === ERROR_SAVE && <Error message="Something went wrong" onClose={ () => back() } /> }
     </article>
   );
-}
+};
+
+export default Appointment;

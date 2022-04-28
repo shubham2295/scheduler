@@ -1,10 +1,12 @@
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 
+// replacing baseurl for hosted version
 if (process.env.REACT_APP_API_BASE_URL) {
   axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 }
 
+// reducer function to handle to dispatch actions
 const stateReducer = (state, action) => {
 
   if (action.type === "SET_DAY") {
@@ -29,6 +31,7 @@ const stateReducer = (state, action) => {
       [action.id]: appointment
     };
 
+    // updateds the spots based on cancel/add interview dispatch call
     const days = state.days.map(day => {
       if (day.name === state.day) {
         let spots = day.spots;
@@ -48,7 +51,7 @@ const stateReducer = (state, action) => {
 
 };
 
-
+// custom hoook for fetching and updating the data to server
 const useApplicationData = () => {
 
   const [state, dispatchState] = useReducer(stateReducer, {
@@ -74,6 +77,7 @@ const useApplicationData = () => {
           interviewers: interviewrsResponse.data
         });
       });
+
   }, []);
 
 

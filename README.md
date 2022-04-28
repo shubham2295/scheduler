@@ -1,23 +1,33 @@
 # Interview Scheduler
 
-## Setup
+An SPA application to create, edit and delete the appointments📅. Created using React.js⚛️ and thoroughly tested using Jest, Cypress and Storybook.
 
-Install dependencies with `npm install`.
+## Sneakpeek
 
-## Running Webpack Development Server
+![scheduler-gif]()
 
-```sh
-npm start
-```
+## Getting Started
 
-## Running Jest Test Framework
+Access this project [here](https://shubham-scheduler.netlify.app/) or clone this repository to run in your local environment.
 
-```sh
-npm test
-```
+| Command                                                  | Description                                             |
+| :------------------------------------------------------- | :------------------------------------------------------ |
+| `git clone https://github.com/shubham2295/scheduler.git` | Import the project to your device.                      |
+| `npm install`                                            | Install all the dependencies required for this project. |
+| `npm start`                                              | Run the WebPack Development Server on port 8000.        |
+| `npm test`                                               | Run jest test framework to execute all the tests.       |
+| `npm run storybook`                                      | Run storybook visual testbed.                           |
+| `npm run cypress`                                        | Run end-to-end tests with browser.                      |
 
-## Running Storybook Visual Testbed
+- You can access the app at http://localhost:8000
+- As a user you can create the appointments for different days
+- The remaning spots will update in realtime based on user's interactions
 
-```sh
-npm run storybook
-```
+## Tools and Technologies
+
+- React.js
+- Cypress
+- Jest
+- Storybook
+- Express
+- Axios

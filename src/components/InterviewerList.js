@@ -3,6 +3,7 @@ import 'components/InterviewerList.scss';
 import InterviewerListItem from './InterviewerListItem';
 import PropTypes from 'prop-types';
 
+// renders interviewer list inside the appointement form
 const InterviewerList = (props) => {
 
   const interviewerList = props.interviewers.map(interviewer =>

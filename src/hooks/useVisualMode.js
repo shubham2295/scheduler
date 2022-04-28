@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// manages the history of user interactions so user can go back to previous action
 const useVisualMode = (intial) => {
 
   const [history, setHistory] = useState([intial]);

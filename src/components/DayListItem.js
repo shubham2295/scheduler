@@ -2,7 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import 'components/DayListItem.scss';
 
-export default function DayListItem(props) {
+//renders single day for daylist component
+const DayListItem = (props) => {
 
   let listItemClass = classNames({
     "day-list__item": true,
@@ -27,3 +28,5 @@ export default function DayListItem(props) {
     </li>
   );
 };
+
+export default DayListItem;

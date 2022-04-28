@@ -1,6 +1,7 @@
 import React from 'react';
 
-export default function Empty(props) {
+// intial state of the appointment slot when it's empty
+const Empty = (props) => {
   return (
     <main className="appointment__add">
       <img
@@ -11,4 +12,6 @@ export default function Empty(props) {
       />
     </main>
   );
-}
+};
+
+export default Empty;

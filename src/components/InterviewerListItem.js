@@ -2,7 +2,8 @@ import React from 'react';
 import 'components/InterviewerListItem.scss';
 import classNames from 'classnames';
 
-export default function InterviewerListItem(props) {
+// renders single interviewer for interviewerlist
+const InterviewerListItem = (props) => {
 
   const ILClass = classNames("interviewers__item", { "interviewers__item--selected": props.selected });
 
@@ -16,4 +17,6 @@ export default function InterviewerListItem(props) {
       { props.selected && props.name }
     </li>
   );
-}
+};
+
+export default InterviewerListItem;

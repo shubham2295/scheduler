@@ -1,7 +1,5 @@
 import React from "react";
-
 import { render, cleanup, fireEvent } from "@testing-library/react";
-
 import Form from "components/Appointment/Form";
 
 afterEach(cleanup);
@@ -88,8 +86,6 @@ describe("Form component tests", () => {
     expect(onSave).toHaveBeenCalledTimes(1);
     expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
   });
-
-  //test
 
   it("can successfully save after trying to submit an empty student name", () => {
     const onSave = jest.fn();

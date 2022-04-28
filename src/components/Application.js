@@ -5,7 +5,8 @@ import Appointment from "./Appointment";
 import useApplicationData from "hooks/useApplicationData";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
-export default function Application(props) {
+// main component that loads everything on the screen on intial load
+const Application = (props) => {
 
   const {
     state,
@@ -61,4 +62,6 @@ export default function Application(props) {
       </section>
     </main >
   );
-}
+};
+
+export default Application;
