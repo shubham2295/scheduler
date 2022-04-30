@@ -49,7 +49,6 @@ const Appointment = (props) => {
         transition(EMPTY);
       })
       .catch(error => {
-        console.log("error");
         transition(ERROR_DELETE, true);
       });
   };
@@ -61,7 +60,7 @@ const Appointment = (props) => {
       { mode === CREATE &&
         <Form
           interviewers={ props.interviewers }
-          onCancel={ () => back() }
+          onCancel={ back }
           onSave={ save } /> }
       { mode === SAVING && <Status message="Saving" /> }
       { mode === DELETING && <Status message="Deleting" /> }
@@ -75,7 +74,7 @@ const Appointment = (props) => {
           interviewer={ props.interview.interviewer.id }
           interviewers={ props.interviewers }
           student={ props.interview.student }
-          onCancel={ () => back() }
+          onCancel={ back }
           onSave={ save } /> }
       { mode === SHOW && (
         <Show
@@ -85,8 +84,8 @@ const Appointment = (props) => {
           onEdit={ () => transition(EDIT) }
         />
       ) }
-      { mode === ERROR_DELETE && <Error message="Something went wrong" onClose={ () => back() } /> }
-      { mode === ERROR_SAVE && <Error message="Something went wrong" onClose={ () => back() } /> }
+      { mode === ERROR_DELETE && <Error message="Something went wrong" onClose={ back } /> }
+      { mode === ERROR_SAVE && <Error message="Something went wrong" onClose={ back } /> }
     </article>
   );
 };

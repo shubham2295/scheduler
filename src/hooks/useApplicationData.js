@@ -23,7 +23,7 @@ const stateReducer = (state, action) => {
   if (action.type === "SET_INTERVIEW") {
     const appointment = {
       ...state.appointments[action.id],
-      interview: { ...(action.interview) }
+      interview: (!action.interview) ? null : { ...(action.interview) }
     };
 
     const appointments = {
@@ -31,11 +31,13 @@ const stateReducer = (state, action) => {
       [action.id]: appointment
     };
 
+    const prevInterview = state.appointments[action.id].interview;
     // updateds the spots based on cancel/add interview dispatch call
     const days = state.days.map(day => {
       if (day.name === state.day) {
         let spots = day.spots;
-        (action.interview) ? spots-- : spots++;
+        if (!prevInterview) spots--;
+        if (!action.interview) spots++;
         return { ...day, spots: spots };
       }
       return day;
@@ -61,8 +63,6 @@ const useApplicationData = () => {
     interviewers: {}
   });
 
-  const setDay = day => dispatchState({ type: "SET_DAY", day });
-
   useEffect(() => {
 
     Promise.all([
@@ -80,6 +80,7 @@ const useApplicationData = () => {
 
   }, []);
 
+  const setDay = day => dispatchState({ type: "SET_DAY", day });
 
   const bookInterview = (id, interview) => {
 
