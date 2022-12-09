@@ -13,5 +13,5 @@
 
 [build.environment]
   NODE_VERSION = "12.22.7"
-  REACT_APP_API_BASE_URL = "https://scheduler-lhl-22.herokuapp.com/"
+  REACT_APP_API_BASE_URL = "https://scheduler-lhl.onrender.com"
   REACT_APP_WEBSOCKET_URL = "wss://scheduler-lhl-22.herokuapp.com/"
